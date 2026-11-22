@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одиночный турник — NoomiClone</title>
+    <meta name="description" content="Официальная страница карты «Одиночный турник» для игры NoomiClone (noomidev). Код карты: SC5Y-C25.">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="NoomiClone • noomidev">
+    <meta property="og:title" content="Одиночный турник — Карта для NoomiClone">
+    <meta property="og:description" content="Минималистичная карта для тренировок: только пол, стены и одиночный турник. Код карты: SC5Y-C25.">
+    <meta property="og:image" content="logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Одиночный турник — Карта для NoomiClone">
+    <meta name="twitter:description" content="Минималистичная карта для тренировок: только пол, стены и одиночный турник. Код карты: SC5Y-C25.">
+    <meta name="twitter:image" content="logo.png">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: #f5f8fc; color: #0f172a; min-height: 100vh; display: flex; flex-direction: column; }
+        .navbar { background: #ffffff; border-bottom: 1px solid #dce6f2; padding: 16px 24px; }
+        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: #0f172a; }
+        .brand img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
+        .nav-tag { font-size: 13px; font-weight: 600; color: #0369a1; background: #e0f2fe; padding: 5px 12px; border-radius: 99px; }
+        .main { background: linear-gradient(180deg, #e3f0ff 0%, #f5f8fc 100%); flex: 1; padding: 36px 20px; display: flex; align-items: center; justify-content: center; }
+        .grid { max-width: 1000px; width: 100%; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; }
+        .card { background: #ffffff; border: 1px solid #dce6f2; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); }
+        .eyebrow { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #0284c7; margin-bottom: 6px; }
+        h1 { font-size: 30px; font-weight: 800; margin-bottom: 4px; }
+        .sub { color: #64748b; font-size: 14px; margin-bottom: 18px; }
+        .preview { background: #f0f5fa; border: 1px solid #dce6f2; border-radius: 16px; height: 250px; overflow: hidden; margin-bottom: 18px; display: flex; align-items: center; justify-content: center; }
+        .preview img { width: 100%; height: 100%; object-fit: cover; }
+        .desc { color: #475569; font-size: 15px; line-height: 1.55; }
+        .col-right { display: flex; flex-direction: column; gap: 24px; }
+        .title { font-size: 17px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .logs { background: #f0f5fa; border: 1px solid #dce6f2; border-radius: 14px; padding: 14px; height: 190px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.6; color: #334155; white-space: pre-wrap; }
+        .code-card { text-align: center; }
+        .code-card .title { justify-content: center; }
+        .code { background: #e0f2fe; border: 2px solid #bae6fd; border-radius: 16px; padding: 16px; font-family: monospace; font-size: 32px; font-weight: 800; letter-spacing: 3px; color: #0369a1; user-select: all; -webkit-user-select: all; }
+        .hint { margin-top: 10px; font-size: 13px; color: #64748b; }
+        .footer { background: #ffffff; border-top: 1px solid #dce6f2; padding: 18px; text-align: center; font-size: 13px; color: #64748b; }
+        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="brand">
+                <img src="logo.png" alt="Logo">
+                <span>NoomiClone</span>
+            </div>
+            <span class="nav-tag">noomidev • Custom Map</span>
+        </div>
+    </header>
+    <main class="main">
+        <div class="grid">
+            <section class="card">
+                <div class="eyebrow">Карта сообщества</div>
+                <h1>Одиночный турник</h1>
+                <p class="sub">Издатель: noomidev</p>
+                <div class="preview">
+                    <img src="view.png" alt="Одиночный турник">
+                </div>
+                <p class="desc">Чистая арена для отработки раскачек, перехватов и приземлений. На карте только пол, стены и одиночная перекладина.</p>
+            </section>
+            <div class="col-right">
+                <section class="card">
+                    <h2 class="title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Лог обновлений</span>
+                    </h2>
+                    <div class="logs" id="logs-content">Загрузка logs.txt...</div>
+                </section>
+                <section class="card code-card">
+                    <h2 class="title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Код карты</span>
+                    </h2>
+                    <div class="code">SC5Y-C25</div>
+                    <p class="hint">Нажмите на код, чтобы выделить и скопировать</p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">Карта «Одиночный турник» для NoomiClone · noomidev</footer>
+    <script>
+        fetch('logs.txt?t=' + Date.now())
+            .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
+            .then(function(t) { document.getElementById('logs-content').textContent = t.trim() || 'Лог пуст.'; })
+            .catch(function() { document.getElementById('logs-content').textContent = 'Файл logs.txt не найден.'; });
+    </script>
+</body>
+</html>
