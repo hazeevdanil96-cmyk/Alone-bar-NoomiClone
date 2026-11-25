@@ -35,7 +35,13 @@
         .desc { color: #475569; font-size: 15px; line-height: 1.55; }
         .col-right { display: flex; flex-direction: column; gap: 24px; }
         .title { font-size: 17px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .logs { background: #f0f5fa; border: 1px solid #dce6f2; border-radius: 14px; padding: 14px; height: 190px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.6; color: #334155; white-space: pre-wrap; }
+        .logs { background: #f0f5fa; border: 1px solid #dce6f2; border-radius: 14px; padding: 14px; height: 210px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.55; color: #334155; }
+        .log-line { margin-bottom: 4px; word-break: break-word; }
+        .log-empty { height: 8px; }
+        .log-plus { color: #16a34a; font-weight: 600; }
+        .log-minus { color: #dc2626; font-weight: 600; }
+        .log-head { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 17px; font-weight: 800; color: #0f172a; margin: 6px 0 4px; }
+        .log-gold { color: #b45309; font-weight: 700; }
         .code-card { text-align: center; }
         .code-card .title { justify-content: center; }
         .code { background: #e0f2fe; border: 2px solid #bae6fd; border-radius: 16px; padding: 16px; font-family: monospace; font-size: 32px; font-weight: 800; letter-spacing: 3px; color: #0369a1; user-select: all; -webkit-user-select: all; }
@@ -86,9 +92,38 @@
     </main>
     <footer class="footer">Карта «Одиночный турник» для NoomiClone · noomidev</footer>
     <script>
+        function renderLogs(text) {
+            var box = document.getElementById('logs-content');
+            box.innerHTML = '';
+            var lines = text.split(/\r?\n/);
+            lines.forEach(function(line) {
+                var trimmed = line.trim();
+                var div = document.createElement('div');
+                if (!trimmed) {
+                    div.className = 'log-empty';
+                } else if (trimmed.startsWith('+')) {
+                    div.className = 'log-line log-plus';
+                    div.textContent = trimmed;
+                } else if (trimmed.startsWith('-')) {
+                    div.className = 'log-line log-minus';
+                    div.textContent = trimmed;
+                } else if (trimmed.startsWith('#')) {
+                    div.className = 'log-line log-head';
+                    div.textContent = trimmed.slice(1).trim();
+                } else if (trimmed.startsWith('/')) {
+                    div.className = 'log-line log-gold';
+                    div.textContent = trimmed.slice(1).trim();
+                } else {
+                    div.className = 'log-line';
+                    div.textContent = line;
+                }
+                box.appendChild(div);
+            });
+        }
+
         fetch('logs.txt?t=' + Date.now())
             .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
-            .then(function(t) { document.getElementById('logs-content').textContent = t.trim() || 'Лог пуст.'; })
+            .then(function(t) { t.trim() ? renderLogs(t) : (document.getElementById('logs-content').textContent = 'Лог пуст.'); })
             .catch(function() { document.getElementById('logs-content').textContent = 'Файл logs.txt не найден.'; });
     </script>
 </body>
