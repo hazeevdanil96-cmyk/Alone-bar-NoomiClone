@@ -108,3 +108,138 @@ fetch('logs.txt?t=' + Date.now())
 .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
 .then(function(t) { parseVersions(t); })
 .catch(function() { document.getElementById('logs-content').textContent = 'Файл logs.txt не найден.'; });
+<body>
+    <header class="navbar">
+        <div class="nav-inner">
+            <div class="brand">
+                <img src="logo.png" alt="Logo">
+                <span>NoomiClone</span>
+            </div>
+            <span class="nav-tag">noomidev • Custom Map</span>
+        </div>
+    </header>
+    <main class="main">
+        <div class="grid">
+            <section class="card">
+                <div class="eyebrow">Карта сообщества</div>
+                <h1>Одиночный турник</h1>
+                <p class="sub">Издатель: noomidev</p>
+                <div class="preview">
+                    <img src="view.png" alt="Одиночный турник">
+                </div>
+                <p class="desc">Чистая арена для отработки раскачек, перехватов и приземлений. На карте только пол, стены и одиночная перекладина.</p>
+            </section>
+            <div class="col-right">
+                <section class="card">
+                    <h2 class="title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        <span>Лог обновлений</span>
+                    </h2>
+                    <div class="version-tabs" id="version-tabs"></div>
+                    <div class="logs" id="logs-content">Загрузка logs.txt...</div>
+                </section>
+                <section class="card code-card">
+                    <h2 class="title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <span>Код карты</span>
+                    </h2>
+                    <div class="code">SC5Y-C25</div>
+                    <p class="hint">Нажмите на код, чтобы выделить и скопировать</p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">Карта «Одиночный турник» для NoomiClone · noomidev</footer>
+    <script>
+        function appendText(parent, str) {
+            const parts = str.split('[BETA]');
+            parts.forEach(function(part, index) {
+                if (part) {
+                    parent.appendChild(document.createTextNode(part));
+                }
+                if (index < parts.length - 1) {
+                    const span = document.createElement('span');
+                    span.className = 'log-beta';
+                    span.textContent = '[BETA]';
+                    parent.appendChild(span);
+                }
+            });
+        }
+
+        function renderLogs(text) {
+            const box = document.getElementById('logs-content');
+            box.innerHTML = '';
+            const styles = {
+                '+': 'log-line log-plus',
+                '-': 'log-line log-minus',
+                '*': 'log-line log-small',
+                '@': 'log-line log-diamond',
+                '/': 'log-line log-gold',
+                '#': 'log-line log-head'
+            };
+
+            text.trim().split('\n').forEach(function(rawLine) {
+                const line = rawLine.trim();
+                const div = document.createElement('div');
+                if (!line) {
+                    div.className = 'log-empty';
+                } else if (styles[line.charAt(0)]) {
+                    div.className = styles[line.charAt(0)];
+                    appendText(div, line.slice(1).trim());
+                } else {
+                    div.className = 'log-line';
+                    appendText(div, rawLine);
+                }
+                box.appendChild(div);
+            });
+        }
+
+        function parseVersions(rawText) {
+            const tabsBox = document.getElementById('version-tabs');
+            tabsBox.innerHTML = '';
+            const versions = [];
+            const lines = rawText.split('\n');
+            let currentVer = null;
+            let buffer = [];
+
+            lines.forEach(function(line) {
+                const t = line.trim();
+                if (!currentVer && t.startsWith('<') && t.endsWith('>') && !t.startsWith('</')) {
+                    currentVer = t.slice(1, -1).trim();
+                    buffer = [];
+                } else if (currentVer && (t === '</' + currentVer + '>' || t === '</' + currentVer + '>,')) {
+                    versions.push({ name: currentVer, content: buffer.join('\n') });
+                    currentVer = null;
+                } else if (currentVer) {
+                    buffer.push(line);
+                }
+            });
+
+            if (versions.length === 0) {
+                rawText.trim() ? renderLogs(rawText) : (document.getElementById('logs-content').textContent = 'Лог пуст.');
+                return;
+            }
+
+            versions.forEach(function(ver, idx) {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'ver-btn' + (idx === 0 ? ' active' : '');
+                btn.textContent = ver.name;
+                btn.onclick = function() {
+                    tabsBox.querySelectorAll('.ver-btn').forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    renderLogs(ver.content);
+                };
+                tabsBox.appendChild(btn);
+            });
+
+            renderLogs(versions.at(0).content);
+        }
+
+        fetch('logs.txt?t=' + Date.now())
+            .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
+            .then(function(t) { parseVersions(t); })
+            .catch(function() { document.getElementById('logs-content').textContent = 'Файл logs.txt не найден.'; });
+    </script>
+</body>
+</html>
