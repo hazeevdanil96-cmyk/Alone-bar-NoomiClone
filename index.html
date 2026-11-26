@@ -3,27 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Одиночный турник — NoomiClone</title>
-    <meta name="description" content="Официальная страница карты «Одиночный турник» для игры NoomiClone (noomidev). Код карты: SC5Y-C25.">
+    <title>NoomiNoob Maps — Карты для NoomiClone</title>
+    <meta name="description" content="Каталог карт для игры NoomiClone (noomidev). Коды карт и актуальные логи обновлений.">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="apple-touch-icon" href="logo.png">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="NoomiClone • noomidev">
-    <meta property="og:title" content="Одиночный турник — Карта для NoomiClone">
-    <meta property="og:description" content="Минималистичная карта для тренировок: только пол, стены и одиночный турник. Код карты: SC5Y-C25.">
+    <meta property="og:site_name" content="NoomiNoob Maps">
+    <meta property="og:title" content="NoomiNoob Maps — Карты для NoomiClone">
+    <meta property="og:description" content="Официальный каталог карт от NoomiNoob для NoomiClone. Выбирайте карту, смотрите обновления и копируйте код.">
     <meta property="og:image" content="logo.png">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Одиночный турник — Карта для NoomiClone">
-    <meta name="twitter:description" content="Минималистичная карта для тренировок: только пол, стены и одиночный турник. Код карты: SC5Y-C25.">
+    <meta name="twitter:title" content="NoomiNoob Maps — Карты для NoomiClone">
+    <meta name="twitter:description" content="Официальный каталог карт от NoomiNoob для NoomiClone.">
     <meta name="twitter:image" content="logo.png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         body { background: #f5f8fc; color: #0f172a; min-height: 100vh; display: flex; flex-direction: column; }
         .navbar { background: #ffffff; border-bottom: 1px solid #dce6f2; padding: 16px 24px; }
-        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
         .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: #0f172a; }
         .brand img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
         .nav-tag { font-size: 13px; font-weight: 600; color: #0369a1; background: #e0f2fe; padding: 5px 12px; border-radius: 99px; }
+        .maps-bar { background: #ffffff; border-bottom: 1px solid #dce6f2; padding: 12px 24px; }
+        .maps-tabs { max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+        .map-btn { background: #f0f5fa; border: 1px solid #dce6f2; border-radius: 12px; padding: 8px 14px; font-size: 14px; font-weight: 700; color: #475569; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.15s ease; }
+        .map-btn img { width: 20px; height: 20px; border-radius: 5px; object-fit: cover; }
+        .map-btn:hover { background: #e0f2fe; color: #0369a1; border-color: #bae6fd; }
+        .map-btn.active { background: #0284c7; color: #ffffff; border-color: #0284c7; box-shadow: 0 3px 10px rgba(2, 132, 199, 0.25); }
         .main { background: linear-gradient(180deg, #e3f0ff 0%, #f5f8fc 100%); flex: 1; padding: 36px 20px; display: flex; align-items: center; justify-content: center; }
         .grid { max-width: 1000px; width: 100%; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; }
         .card { background: #ffffff; border: 1px solid #dce6f2; border-radius: 24px; padding: 26px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05); }
@@ -67,21 +73,24 @@
         <div class="nav-inner">
             <div class="brand">
                 <img src="logo.png" alt="Logo">
-                <span>NoomiClone</span>
+                <span>NoomiNoob Maps</span>
             </div>
-            <span class="nav-tag">noomidev • Custom Map</span>
+            <span class="nav-tag">NoomiClone • noomidev</span>
         </div>
     </header>
+    <nav class="maps-bar">
+        <div class="maps-tabs" id="maps-tabs"></div>
+    </nav>
     <main class="main">
         <div class="grid">
             <section class="card">
                 <div class="eyebrow">Карта сообщества</div>
-                <h1>Одиночный турник</h1>
+                <h1 id="map-name">Загрузка...</h1>
                 <p class="sub">Издатель: noomidev</p>
                 <div class="preview">
-                    <img src="view.png" alt="Одиночный турник">
+                    <img id="map-icon" src="view.png" alt="Превью карты">
                 </div>
-                <p class="desc">Чистая арена для отработки раскачек, перехватов и приземлений. На карте только пол, стены и одиночная перекладина.</p>
+                <p class="desc" id="map-desc">Пользовательская карта для игры NoomiClone от NoomiNoob.</p>
             </section>
             <div class="col-right">
                 <section class="card">
@@ -97,67 +106,17 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <span>Код карты</span>
                     </h2>
-                    <div class="code">SC5Y-C25</div>
+                    <div class="code" id="map-code">----</div>
                     <p class="hint">Нажмите на код, чтобы выделить и скопировать</p>
                 </section>
             </div>
         </div>
     </main>
-    <footer class="footer">Карта «Одиночный турник» для NoomiClone · noomidev</footer>
+    <footer class="footer">NoomiNoob Maps · Карты для NoomiClone (noomidev)</footer>
     <script src="script.js"></script>
 </body>
 </html>
-log-line log-small',
-                '@': 'log-line log-diamond',
-                '/': 'log-line log-gold',
-                '#': 'log-line log-head'
-            };
-
-            text.trim().split('\n').forEach(function(rawLine) {
-                const line = rawLine.trim();
-                const div = document.createElement('div');
-                if (!line) {
-                    div.className = 'log-empty';
-                } else if (styles[line.charAt(0)]) {
-                    div.className = styles[line.charAt(0)];
-                    appendText(div, line.slice(1).trim());
-                } else {
-                    div.className = 'log-line';
-                    appendText(div, rawLine);
-                }
-                box.appendChild(div);
-            });
-        }
-
-        function parseVersions(rawText) {
-            const tabsBox = document.getElementById('version-tabs');
-            tabsBox.innerHTML = '';
-            const versions = [];
-            const lines = rawText.split('\n');
-            let currentVer = null;
-            let buffer = [];
-
-            lines.forEach(function(line) {
-                const t = line.trim();
-                if (!currentVer && t.startsWith('<') && t.endsWith('>') && !t.startsWith('</')) {
-                    currentVer = t.slice(1, -1).trim();
-                    buffer = [];
-                } else if (currentVer && (t === '</' + currentVer + '>' || t === '</' + currentVer + '>,')) {
-                    versions.push({ name: currentVer, content: buffer.join('\n') });
-                    currentVer = null;
-                } else if (currentVer) {
-                    buffer.push(line);
-                }
-            });
-
-            if (versions.length === 0) {
-                rawText.trim() ? renderLogs(rawText) : (document.getElementById('logs-content').textContent = 'Лог пуст.');
-                return;
-            }
-
-            versions.forEach(function(ver, idx) {
-                const btn = document.createElement('button');
-                btn.type = 'button';
+btn.type = 'button';
                 btn.className = 'ver-btn' + (idx === 0 ? ' active' : '');
                 btn.textContent = ver.name;
                 btn.onclick = function() {
