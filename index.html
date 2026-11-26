@@ -145,3 +145,52 @@
                     appendFormattedText(div, trimmed.slice(1).trim());
                 } else if (trimmed.startsWith('#')) {
                     div.className = 'log-line log-head';
+appendFormattedText(div, trimmed.slice(1).trim());
+} else {
+div.className = 'log-line';
+appendFormattedText(div, line);
+}
+box.appendChild(div);
+});
+}
+function parseVersions(rawText) {
+var tabsBox = document.getElementById('version-tabs');
+tabsBox.innerHTML = '';
+var regex = /<([^/\s>]+)>([\s\S]*?)</\1>/g;
+var versions = [];
+var match;
+while ((match = regex.exec(rawText)) !== null) {
+versions.push({
+name: match[1].trim(),
+content: match[2]
+});
+}
+if (versions.length === 0) {
+if (rawText.trim()) {
+renderLogs(rawText);
+} else {
+document.getElementById('logs-content').textContent = 'Лог пуст.';
+}
+return;
+}
+versions.forEach(function(ver, idx) {
+var btn = document.createElement('button');
+btn.type = 'button';
+btn.className = 'ver-btn' + (idx === 0 ? ' active' : '');
+btn.textContent = ver.name;
+btn.onclick = function() {
+var allBtns = tabsBox.querySelectorAll('.ver-btn');
+for (var i = 0; i < allBtns.length; i++) {
+allBtns[i].classList.remove('active');
+}
+btn.classList.add('active');
+renderLogs(ver.content);
+};
+tabsBox.appendChild(btn);
+});
+renderLogs(versions[0].content);
+}
+fetch('logs.txt?t=' + Date.now())
+.then(function(r) { return r.ok ? r.text() : Promise.reject(); })
+.then(function(t) { parseVersions(t); })
+.catch(function() { document.getElementById('logs-content').textContent = 'Файл logs.txt не найден.'; });
