@@ -1,1 +1,13 @@
+<alonebar>
+Icon: alone.png
+Name: Одиночный турник
+code: SC5YC25
+Desc: Чистая арена для отработки раскачек, перехватов и приземлений. На карте только пол, стены и одиночная перекладина.
+</alonebar>
+
+<flat>
+Icon: PH.png
+Name: flat (old)
+code: SC5YC27
+</flat>
 
